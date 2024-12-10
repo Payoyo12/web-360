@@ -1,86 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>XR Payoyo12</title>
     <meta charset="utf-8">
+    <title>XR Payoyo12</title>
+    <meta name="description" content="360 Image and Model">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <link rel="stylesheet" href="/style.css">
-    
-    <script>
-      if (window.location.protocol == "http:" &&
-          window.location.hostname != "localhost" && 
-          window.location.hostname != "127.0.0.1" &&
-          window.location.hostname != "[::1]") {
-        window.location = window.location.href.replace('http:', 'https:');        
-      }
-    </script>    
-    
     <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
-    <script src="https://unpkg.com/aframe-extras@3.3.0/dist/aframe-extras.min.js"></script>
-    <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
-
-    <script>
-      AFRAME.registerComponent('hide-in-ar-mode', {
-        init: function () {
-          this.el.sceneEl.addEventListener('enter-vr', (ev) => {
-            this.wasVisible = this.el.getAttribute('visible');
-            if (this.el.sceneEl.is('ar-mode')) {
-              this.el.setAttribute('visible', false);
-            }
-          });
-          this.el.sceneEl.addEventListener('exit-vr', (ev) => {
-            if (this.wasVisible) this.el.setAttribute('visible', true);
-          });
-        }
-      });
-
-      AFRAME.registerComponent('ar-shadows', {
-        schema: {
-          opacity: {default: 0.3}
-        },
-        init: function () {
-          this.el.sceneEl.addEventListener('enter-vr', (ev) => {
-            this.wasVisible = this.el.getAttribute('visible');
-            if (this.el.sceneEl.is('ar-mode')) {
-              this.savedMaterial = this.el.object3D.children[0].material;
-              this.el.object3D.children[0].material = new THREE.ShadowMaterial();
-              this.el.object3D.children[0].material.opacity = this.data.opacity;
-              this.el.setAttribute('visible', true);
-            }
-          });
-          this.el.sceneEl.addEventListener('exit-vr', (ev) => {
-            if (this.savedMaterial) {
-              this.el.object3D.children[0].material = this.savedMaterial;
-              this.savedMaterial = null;
-            }
-            if (!this.wasVisible) this.el.setAttribute('visible', false);
-          });
-        }
-      });
-    </script>
-  </head>  
-
+    
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  
   <body>
     <a-scene>
-      <a-assets timeout="30000">
-        <!-- Modelo Spinosaurus -->
-        <a-asset-item id="spinosaurus" src="untitled.glb" response-type="arraybuffer"></a-asset-item>
-      </a-assets>
-
-      <a-camera position="0 1 2"></a-camera>
-
-      <!-- Fondo con iframe incrustado en un a-plane detrás de la cámara -->
-      <a-plane position="0 0 -5" rotation="0 0 0" width="10" height="6" scale="1 1 1">
-        <a-entity position="0 0 0">
-          <iframe src="https://skybox.blockadelabs.com/e/9125f03bf635550f7beb4abae710339a" 
-                  width="100%" height="100%" frameborder="0" allow="fullscreen" 
-                  style="border: none; pointer-events: none;"></iframe>
-        </a-entity>
-      </a-plane>
+      <!-- Fondo 360º usando la imagen descargada -->
+      <a-sky src="fondo360Espacio.png" rotation="0 -130 0"></a-sky>
 
       <!-- Avatar en el centro de la escena -->
+      <a-assets timeout="30000">
+        <a-asset-item id="spinosaurus" src="untitled.glb" response-type="arraybuffer"></a-asset-item>
+      </a-assets>
+      
+      <a-camera position="0 1 2"></a-camera>
+
       <a-entity id="dino" position="0 0 -3" scale="1 1 1">
         <a-entity position="0 0 0" rotation="0 0 0"
                   gltf-model="#spinosaurus"
@@ -105,44 +53,7 @@
       <!-- Plane que recibe sombras (solo en AR) -->
       <a-plane height="15" width="15" position="0 0 -3" rotation="-90 0 0"
                shadow="receive: true"
-               ar-shadows="opacity: 0.3"
                visible="false"></a-plane>
     </a-scene>
-
-    <div id="text">
-      <h1>A-Frame Spinosaurus for VR/AR</h1>
-    
-      <p>
-        Model: <a href="https://sketchfab.com/3d-models/spinosaurus-2135501583704537907645bf723685e7">Spinosaurus</a> by 
-        <a href="https://sketchfab.com/VapTor">Vaptor-Studio</a>.
-      </p>
-      <p>
-        Size: <button id="btn_full">Full</button>
-        <button id="btn_half">1/2</button>
-        <button id="btn_quarter">1/4</button>
-      </p>
-      
-      <p>
-        This requires browser support for WebXR's AR mode, for example an
-        <a href="https://developers.google.com/ar/discover/supported-devices">ARCore-compatible</a>
-        Android phone with Chrome version 81 or higher.
-      </p>
-      
-      <p>
-        Powered by <a href="https://aframe.io/blog/aframe-v1.0.0/">A-Frame v1.0.0</a>.
-      </p>
-    </div>
-
-    <script>
-      function setSize(scale) {
-        document.getElementById('dino').setAttribute('scale', {x: scale, y: scale, z: scale});
-      }
-      document.getElementById('btn_full').onclick = setSize.bind(this, 1);
-      document.getElementById('btn_half').onclick = setSize.bind(this, 0.5);
-      document.getElementById('btn_quarter').onclick = setSize.bind(this, 0.25);
-    </script>
-
-    <div class="glitchButton" style="position:fixed;top:20px;right:20px;"></div>
-    <script src="https://button.glitch.me/button.js"></script>
   </body>
 </html>
