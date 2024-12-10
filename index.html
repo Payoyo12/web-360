@@ -14,13 +14,36 @@
         margin: 0;
         overflow: hidden;
       }
+      #button-container {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 10;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
     </style>
   </head>
   
   <body>
+    <!-- Contenedor para el botón -->
+    <div id="button-container">
+      <button id="changeBackground">Cambiar Fondo</button>
+    </div>
+
     <a-scene>
-      <!-- Fondo 360º usando la imagen descargada -->
-      <a-sky src="fondo360Espacio.png" rotation="0 -130 0"></a-sky>
+      <!-- Fondo 360º usando la imagen inicial -->
+      <a-sky id="sky" src="fondo360Espacio.png" rotation="0 -130 0"></a-sky>
 
       <!-- Avatar en el centro de la escena -->
       <a-assets timeout="30000">
@@ -55,5 +78,13 @@
                shadow="receive: true"
                visible="false"></a-plane>
     </a-scene>
+
+    <script>
+      // Agregar evento al botón
+      document.getElementById('changeBackground').addEventListener('click', function () {
+        // Cambiar el atributo 'src' del elemento 'a-sky'
+        document.getElementById('sky').setAttribute('src', 'fondo360Anime.png');
+      });
+    </script>
   </body>
 </html>
