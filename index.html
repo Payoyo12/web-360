@@ -80,10 +80,27 @@
     </a-scene>
 
     <script>
-      // Agregar evento al botón
+      // Array con las imágenes de fondo
+      const backgrounds = [
+        'fondo360Espacio.png',
+        'fondo360Anime.png',
+        'fondo360Bosque.png', // Añade más imágenes aquí
+        'fondo360Ciudad.png'
+      ];
+
+      // Índice inicial
+      let currentIndex = 0;
+
+      // Referencia al elemento 'a-sky'
+      const skyElement = document.getElementById('sky');
+
+      // Evento del botón para alternar entre las imágenes
       document.getElementById('changeBackground').addEventListener('click', function () {
+        // Incrementar el índice y asegurarse de que vuelva al inicio al alcanzar el final
+        currentIndex = (currentIndex + 1) % backgrounds.length;
+
         // Cambiar el atributo 'src' del elemento 'a-sky'
-        document.getElementById('sky').setAttribute('src', 'fondo360Aime.png');
+        skyElement.setAttribute('src', backgrounds[currentIndex]);
       });
     </script>
   </body>
