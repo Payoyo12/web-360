@@ -1,19 +1,50 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<iframe src="https://skybox.blockadelabs.com/e/9125f03bf635550f7beb4abae710339a" width=700 height=700 style="border:0;" allow="fullscreen"></iframe>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagen 360</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        iframe {
+            border: 0;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Vista 360°</h1>
+
+    <!-- Iframe para mostrar la imagen 360 -->
+    <iframe id="image360" src="https://skybox.blockadelabs.com/e/9125f03bf635550f7beb4abae710339a" width="700" height="700" allow="fullscreen"></iframe>
+
+    <!-- Botón para cambiar la imagen -->
+    <button onclick="changeImage()">Cambiar Imagen 360</button>
+
+    <script>
+        // Función para cambiar la imagen del iframe
+        function changeImage() {
+            // Cambiar la URL del iframe por una nueva imagen 360
+            var iframe = document.getElementById('image360');
+            iframe.src = "https://skybox.blockadelabs.com/e/6406b18032bcbfcc96dfa5f3c865667e"; // URL de la nueva imagen 360
+
+
+
+        }
+    </script>
+
+</body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
 
 
 
